@@ -74,16 +74,23 @@ func part2(scanner *bufio.Scanner) int {
 }
 
 func main() {
+	day := 1
 	var part int
+	var test bool
 	flag.IntVar(&part, "part", 1, "Part 1 or 2")
+	flag.BoolVar(&test, "test", false, "Test or not")
 	flag.Parse()
-
-	f, err := os.Open("data/day1.txt")
+	var f *os.File
+	var err error
+	if test {
+		f, err = os.Open(fmt.Sprintf("data/day%d_test.txt", day))
+	} else {
+		f, err = os.Open(fmt.Sprintf("data/day%d.txt", day))
+	}
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer f.Close()
-
 	scanner := bufio.NewScanner(f)
 
 	if part == 1 {
@@ -91,5 +98,4 @@ func main() {
 	} else {
 		fmt.Println(part2(scanner))
 	}
-
 }
